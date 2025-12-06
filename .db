@@ -8,6 +8,6 @@ CREATE TABLE carros (
          `ft2` LONGTEXT NULL ,
           `ft3` LONGTEXT NULL ,
            `ft4` LONGTEXT NULL ,
-            `f5` LONGTEXT NULL ,
+            `ft5` LONGTEXT NULL ,
              `id` INT NOT NULL AUTO_INCREMENT , PRIMARY KEY (`id`)) 
              ;

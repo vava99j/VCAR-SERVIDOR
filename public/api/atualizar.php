@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 
 // Permite os métodos que você usará (GET, POST, etc.)
-header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Methods: PATCH');
 
 // Permite os cabeçalhos que serão enviados na requisição
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -32,47 +32,57 @@ if ($data === null) {
 // Usamos a chave 'descricao' (ASCII) para corresponder ao Dart.
 $marca     = $data["marca"] ?? '';
 $modelo    = $data["modelo"] ?? '';
-$descricao = $data["descricao"] ?? null; // VARIÁVEL CORRIGIDA E LONGTEXT
+$descricao = $data["descrição"] ?? '';
 $preco     = $data["preco"] ?? '';
 $contato   = $data["contato"] ?? '';
-
-// URLs/caminhos das fotos enviadas pelo Dart
 $ft1 = $data["ft1"] ?? null;
 $ft2 = $data["ft2"] ?? null;
 $ft3 = $data["ft3"] ?? null;
 $ft4 = $data["ft4"] ?? null;
-$ft5 = $data["ft5"] ?? null; 
+$ft5 = $data["ft5"] ?? null;
+$id        = $data["id"] ?? 0;
+
 
 // 4. PREPARAR E EXECUTAR O INSERT
 try {
-    $stmt = $pdo->prepare("
-        INSERT INTO carros 
-        (marca, modelo, descricao, preco, contato, ft1, ft2, ft3, ft4, ft5)
-        VALUES
-        (:marca, :modelo, :descricao, :preco, :contato, :ft1, :ft2, :ft3, :ft4, :ft5)
-    ");
+$stmt = $pdo->prepare("
+    UPDATE carros SET 
+        marca = :marca,
+        modelo = :modelo,
+        descricao = :descricao,
+        preco = :preco,
+        contato = :contato,
+        ft1 = :ft1,
+        ft2 = :ft2,
+        ft3 = :ft3,
+        ft4 = :ft4,
+        ft5 = :ft5
+    WHERE id = :id
+");
 
-    $stmt->execute([
-        ":marca"     => $marca,
-        ":modelo"    => $modelo,
-        ":descricao" => $descricao, // CHAVE E VARIÁVEL CORRESPONDEM PERFEITAMENTE
-        ":preco"     => $preco,
-        ":contato"   => $contato,
-        ":ft1"       => $ft1,
-        ":ft2"       => $ft2,
-        ":ft3"       => $ft3,
-        ":ft4"       => $ft4,
-        ":ft5"        => $ft5
-    ]);
+
+
+$stmt->execute([
+    ":marca"     => $marca,
+    ":modelo"    => $modelo,
+    ":descricao" => $descricao,
+    ":preco"     => $preco,
+    ":contato"   => $contato,
+    ":ft1"       => $ft1,
+    ":ft2"       => $ft2,
+    ":ft3"       => $ft3,
+    ":ft4"       => $ft4,
+    ":ft5"       => $ft5,
+    ":id"        => $id
+]);
+
 
     // Sucesso
     http_response_code(201); // Created
     echo json_encode(["message" => "Carro cadastrado com sucesso!", "id" => $pdo->lastInsertId()]);
-
 } catch (PDOException $e) {
     // Erro no banco de dados
     http_response_code(500); // Internal Server Error
     // Retornamos a mensagem de erro detalhada para ajudar no debugging do Dart
     echo json_encode(["message" => "Erro ao inserir dados no banco de dados.", "error" => $e->getMessage()]);
 }
-?>

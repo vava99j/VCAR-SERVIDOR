@@ -24,7 +24,7 @@
     Foto 2: <input type="file" name="ft2"><br><br>
     Foto 3: <input type="file" name="ft3"><br><br>
     Foto 4: <input type="file" name="ft4"><br><br>
-    Foto 5: <input type="file" name="f5"><br><br>
+    Foto 5: <input type="file" name="ft5"><br><br>
 
     <button type="submit">Cadastrar</button>
 </form>
