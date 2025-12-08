@@ -1,14 +1,25 @@
 <?php
+$databaseUrl = "mysql://root:MVSpXpJvEsHBMoQhncfJXwqNEzynRMcI@switchyard.proxy.rlwy.net:23629/railway";
 
-$host = "localhost"; 
-$usuario = "root";   // padrão do XAMPP
-$senha = "";         // vazio mesmo
-$banco = "vcar";     // nome do banco que você criou
+$components = parse_url($databaseUrl);
+
+$host = $components['host'];
+$port = $components['port'];
+$user = $components['user'];
+$pass = $components['pass'];
+$dbname = ltrim($components['path'], '/');
+
+$dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
+
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    // echo "Conectado!";
+    $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    die("Erro ao conectar: " . $e->getMessage());
+    error_log($e->getMessage());
+    die("Erro ao conectar com o banco de dados.");
 }
