@@ -2,7 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 
 // Permite os métodos que você usará (GET, POST, etc.)
-header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Methods: PATCH');
 
 // Permite os cabeçalhos que serão enviados na requisição
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-require_once "conexao.php";
+require_once "../conexao.php";
 
 // 1. LER O CORPO DA REQUISIÇÃO RAW (JSON)
 $json_data = file_get_contents('php://input');
@@ -28,26 +28,58 @@ if ($data === null) {
     exit;
 }
 
-$id = $data["id"];
+// 3. ATRIBUIÇÃO DE VARIÁVEIS A PARTIR DO JSON
+// Usamos a chave 'descricao' (ASCII) para corresponder ao Dart.
+$marca     = $data["marca"] ?? '';
+$modelo    = $data["modelo"] ?? '';
+$descricao = $data["descricao"] ?? '';
+$preco     = $data["preco"] ?? '';
+$contato   = $data["contato"] ?? '';
+$ft1 = $data["ft1"] ?? null;
+$ft2 = $data["ft2"] ?? null;
+$ft3 = $data["ft3"] ?? null;
+$ft4 = $data["ft4"] ?? null;
+$ft5 = $data["ft5"] ?? null;
+$id        = $data["id"] ?? 0;
 
 
 // 4. PREPARAR E EXECUTAR O INSERT
 try {
 $stmt = $pdo->prepare("
-    DELETE FROM carros
+    UPDATE carros SET 
+        marca = :marca,
+        modelo = :modelo,
+        descricao = :descricao,
+        preco = :preco,
+        contato = :contato,
+        ft1 = :ft1,
+        ft2 = :ft2,
+        ft3 = :ft3,
+        ft4 = :ft4,
+        ft5 = :ft5
     WHERE id = :id
 ");
 
 
 
 $stmt->execute([
+    ":marca"     => $marca,
+    ":modelo"    => $modelo,
+    ":descricao" => $descricao,
+    ":preco"     => $preco,
+    ":contato"   => $contato,
+    ":ft1"       => $ft1,
+    ":ft2"       => $ft2,
+    ":ft3"       => $ft3,
+    ":ft4"       => $ft4,
+    ":ft5"       => $ft5,
     ":id"        => $id
 ]);
 
 
     // Sucesso
     http_response_code(200); // Created
-    echo json_encode(["message" => "Carro apagado com sucesso!", "id" => $pdo->lastInsertId()]);
+    echo json_encode(["message" => "Carro atualizado com sucesso!", "id" => $pdo->lastInsertId()]);
 } catch (PDOException $e) {
     // Erro no banco de dados
     http_response_code(500); // Internal Server Error

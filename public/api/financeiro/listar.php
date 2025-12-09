@@ -13,10 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 header("Content-Type: application/json"); // define retorno JSON
-require_once "conexao.php";
+require_once "../conexao.php";
 
 try {
-    $stmt = $pdo->query("SELECT * FROM carros");
+    $stmt = $pdo->query("SELECT * FROM financeiro");
     $carros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($carros); // envia array JSON
