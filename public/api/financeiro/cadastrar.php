@@ -49,7 +49,7 @@ VALUES (
         ":marca"     => $marca,
         ":modelo"    => $modelo,
         ":vendeu" => $vendeu,
-        ":comrpou" => $comprou
+        ":comprou" => $comprou
     ]);
 
 
