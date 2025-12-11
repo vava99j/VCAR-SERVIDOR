@@ -27,7 +27,6 @@ $descricao = $data["descricao"] ?? null;
 $preco     = $data["preco"] ?? '';
 $contato   = $data["contato"] ?? '';
 $comprou   = $data["comprou"] ?? '';
-$vendeu   = $data["vendeu"] ?? '';
 
 $ft1 = $data["ft1"] ?? null;
 $ft2 = $data["ft2"] ?? null;
@@ -38,9 +37,9 @@ $ft5 = $data["ft5"] ?? null;
 try {
     $stmt = $pdo->prepare("
         INSERT INTO carros 
-        (marca, modelo, descricao, preco, contato, comprou, vendeu, ft1, ft2, ft3, ft4, ft5)
+        (marca, modelo, descricao, preco, contato, comprou, ft1, ft2, ft3, ft4, ft5)
         VALUES
-        (:marca, :modelo, :descricao, :preco, :contato, :comprou, :vendeu, :ft1, :ft2, :ft3, :ft4, :ft5)
+        (:marca, :modelo, :descricao, :preco, :contato, :comprou, :ft1, :ft2, :ft3, :ft4, :ft5)
     ");
 
     $stmt->execute([
@@ -49,7 +48,6 @@ try {
         ":descricao" => $descricao, 
         ":preco"     => $preco,
         ":contato"   => $contato,
-        ":vendeu"   => $vendeu,
         ":comprou"   => $comprou,
         ":ft1"       => $ft1,
         ":ft2"       => $ft2,

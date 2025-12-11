@@ -21,8 +21,8 @@ if ($data === null) {
     exit;
 }
 
-$marca     = $data["marca"] ?? '';
-$modelo    = $data["modelo"] ?? '';
+$marca = $data["marca"] ?? '';
+$modelo = $data["modelo"] ?? '';
 $vendeu = $data["vendeu"] ?? '';
 $comprou = $data["comprou"] ?? '';
 
