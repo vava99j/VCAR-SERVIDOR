@@ -46,7 +46,7 @@ $id        = $data["id"] ?? 0;
 
 // 4. PREPARAR E EXECUTAR O INSERT
 try {
-$stmt = $pdo->prepare("
+    $stmt = $pdo->prepare("
     UPDATE carros SET 
         marca = :marca,
         modelo = :modelo,
@@ -64,25 +64,28 @@ $stmt = $pdo->prepare("
 
 
 
-$stmt->execute([
-    ":marca"     => $marca,
-    ":modelo"    => $modelo,
-    ":descricao" => $descricao,
-    ":preco"     => $preco,
-    ":contato"   => $contato,
-    ":comprou"   => $comprou,
-    ":ft1"       => $ft1,
-    ":ft2"       => $ft2,
-    ":ft3"       => $ft3,
-    ":ft4"       => $ft4,
-    ":ft5"       => $ft5,
-    ":id"        => $id
-]);
+    $stmt->execute([
+        ":marca"     => $marca,
+        ":modelo"    => $modelo,
+        ":descricao" => $descricao,
+        ":preco"     => $preco,
+        ":contato"   => $contato,
+        ":comprou"   => $comprou,
+        ":ft1"       => $ft1,
+        ":ft2"       => $ft2,
+        ":ft3"       => $ft3,
+        ":ft4"       => $ft4,
+        ":ft5"       => $ft5,
+        ":id"        => $id
+    ]);
 
 
     // Sucesso
     http_response_code(200); // Created
-    echo json_encode(["message" => "Carro atualizado com sucesso!", "id" => $pdo->lastInsertId()]);
+    echo json_encode([
+        "message" => "Carro atualizado com sucesso!",
+        "id" => $id
+    ]);
 } catch (PDOException $e) {
     // Erro no banco de dados
     http_response_code(500); // Internal Server Error
