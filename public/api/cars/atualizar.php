@@ -87,8 +87,6 @@ try {
         "id" => $id
     ]);
 } catch (PDOException $e) {
-    // Erro no banco de dados
-    http_response_code(500); // Internal Server Error
-    // Retornamos a mensagem de erro detalhada para ajudar no debugging do Dart
+    http_response_code(500);
     echo json_encode(["message" => "Erro ao inserir dados no banco de dados.", "error" => $e->getMessage()]);
 }

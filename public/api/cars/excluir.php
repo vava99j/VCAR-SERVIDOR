@@ -47,7 +47,10 @@ $stmt->execute([
 
     // Sucesso
     http_response_code(200); // Created
-    echo json_encode(["message" => "Carro apagado com sucesso!", "id" => $pdo->lastInsertId()]);
+  echo json_encode([
+        "message" => "Carro apagado com sucesso!",
+        "id" => $id
+    ]);
 } catch (PDOException $e) {
     // Erro no banco de dados
     http_response_code(500); // Internal Server Error
