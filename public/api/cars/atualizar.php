@@ -41,10 +41,9 @@ $ft2 = $data["ft2"] ?? null;
 $ft3 = $data["ft3"] ?? null;
 $ft4 = $data["ft4"] ?? null;
 $ft5 = $data["ft5"] ?? null;
-$id        = $data["id"] ?? 0;
+$id = $data["id"] ?? 0;
 
 
-// 4. PREPARAR E EXECUTAR O INSERT
 try {
     $stmt = $pdo->prepare("
     UPDATE carros SET 
@@ -54,11 +53,6 @@ try {
         preco = :preco,
         contato = :contato,
         comprou = :comprou,
-        ft1 = :ft1,
-        ft2 = :ft2,
-        ft3 = :ft3,
-        ft4 = :ft4,
-        ft5 = :ft5
     WHERE id = :id
 ");
 
@@ -71,17 +65,11 @@ try {
         ":preco"     => $preco,
         ":contato"   => $contato,
         ":comprou"   => $comprou,
-        ":ft1"       => $ft1,
-        ":ft2"       => $ft2,
-        ":ft3"       => $ft3,
-        ":ft4"       => $ft4,
-        ":ft5"       => $ft5,
         ":id"        => $id
     ]);
 
 
-    // Sucesso
-    http_response_code(200); // Created
+    http_response_code(200);
     echo json_encode([
         "message" => "Carro atualizado com sucesso!",
         "id" => $id
