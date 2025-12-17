@@ -17,15 +17,14 @@ require_once "../conexao.php";
 
 try {
     $stmt = $pdo->query("SELECT
-    SUM(vendeu) AS Total_Vendas,
-    SUM(comprou) AS Total_Compras,
-    SUM(vendeu) - SUM(comprou) AS Lucro_Liquido -- Opcional, para calcular a diferença
-FROM
-    financeiro;");
+    COALESCE(SUM(vendeu), 0) AS Total_Vendas,
+    COALESCE(SUM(comprou), 0) AS Total_Compras,
+    COALESCE(SUM(vendeu), 0) - COALESCE(SUM(comprou), 0) AS Lucro_Liquido
+FROM financeiro;
+");
     $carros = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($carros); // envia array JSON
 } catch (PDOException $e) {
     echo json_encode(["erro" => $e->getMessage()]);
 }
-?>
