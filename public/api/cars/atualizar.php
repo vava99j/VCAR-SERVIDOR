@@ -46,14 +46,19 @@ $id = $data["id"] ?? 0;
 
 try {
     $stmt = $pdo->prepare("
-    UPDATE carros SET 
-        marca = :marca,
-        modelo = :modelo,
-        descricao = :descricao,
-        preco = :preco,
-        contato = :contato,
-        comprou = :comprou,
-    WHERE id = :id
+  UPDATE carros SET 
+    marca = :marca,
+    modelo = :modelo,
+    descricao = :descricao,
+    preco = :preco,
+    contato = :contato,
+    comprou = :comprou,
+    ft1 = :ft1,
+    ft2 = :ft2,
+    ft3 = :ft3,
+    ft4 = :ft4,
+    ft5 = :ft5
+WHERE id = :id
 ");
 
 
@@ -65,6 +70,11 @@ try {
         ":preco"     => $preco,
         ":contato"   => $contato,
         ":comprou"   => $comprou,
+        ":ft1"       => $ft1,
+        ":ft2"       => $ft2,
+        ":ft3"       => $ft3,
+        ":ft4"       => $ft4,
+        ":ft5"       => $ft5,
         ":id"        => $id
     ]);
 
