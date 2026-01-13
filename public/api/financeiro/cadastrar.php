@@ -30,7 +30,7 @@ $comprou = $data["comprou"] ?? '';
 try {
     $stmt = $pdo->prepare("
       INSERT INTO financeiro (
-    data_alteracao,
+    data_time,
     marca,
     modelo,
     vendeu,
