@@ -1,29 +1,22 @@
 <?php
+require_once __DIR__.'/../../domain/entity/pedido.php';
 
-class CriarCarroService
+class CriarPedidoService
 {
-    private CarroRepository $repository;
-    public function __construct(CarroRepository $repository)
+    private PedidoRepository $repository;
+    public function __construct(PedidoRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function executar(CriarCarroDTO $DTO)
+    public function executar(CriarPedidoDTO $DTO)
     {
-        $carro = new Carro(
+        $pedido = new Pedido(
             $DTO->marca,
             $DTO->modelo,
-            $DTO->ano,
-            $DTO->descricao,
-            $DTO->telefone,
             $DTO->precoCompra,
             $DTO->precoVenda,
-            $DTO->ft1,
-            $DTO->ft2,
-            $DTO->ft3,
-            $DTO->ft4,
-            $DTO->ft5
         );
-        $this->repository->salvar($carro);
+        $this->repository->salvar($pedido);
     }
 }
